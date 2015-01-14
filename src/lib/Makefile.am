@@ -58,7 +58,8 @@ libreport_la_SOURCES = \
     xml_parser.c \
     libreport_init.c \
     global_configuration.c \
-    uriparser.c
+    uriparser.c \
+    reporters.c
 
 libreport_la_CPPFLAGS = \
     -I$(srcdir)/../include \
