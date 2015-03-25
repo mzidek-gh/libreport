@@ -125,6 +125,17 @@ EXTRA_DIST = $(reporters_extra_dist) \
 $(DESTDIR)/$(DEBUG_INFO_DIR):
 	$(mkdir_p) '$@'
 
+noinst_LIBRARIES = libreport-problem-report.a
+libreport_problem_report_a_SOURCES = \
+    problem_report.c \
+    problem_report.h
+libreport_problem_report_a_CFLAGS = \
+    -I$(srcdir)/../include \
+    $(LIBREPORT_CFLAGS) \
+    $(GLIB_CFLAGS) \
+    $(SATYR_CFLAGS) \
+    -D_GNU_SOURCE
+
 if BUILD_BUGZILLA
 reporter_bugzilla_SOURCES = \
     reporter-bugzilla.c rhbz.c rhbz.h
@@ -146,7 +157,8 @@ reporter_bugzilla_LDADD = \
     $(GLIB_LIBS) \
     $(XMLRPC_LIBS) $(XMLRPC_CLIENT_LIBS) \
     ../lib/libreport-web.la \
-    ../lib/libreport.la
+    ../lib/libreport.la \
+    libreport-problem-report.a
 endif
 
 if BUILD_MANTISBT
@@ -169,7 +181,8 @@ reporter_mantisbt_CPPFLAGS = \
 reporter_mantisbt_LDADD = \
     $(GLIB_LIBS) \
     ../lib/libreport-web.la \
-    ../lib/libreport.la
+    ../lib/libreport.la \
+    libreport-problem-report.a
 endif
 
 reporter_rhtsupport_SOURCES = \
@@ -196,7 +209,8 @@ reporter_rhtsupport_LDADD = \
     $(GLIB_LIBS) \
     $(LIBXML_LIBS) \
     ../lib/libreport-web.la \
-    ../lib/libreport.la
+    ../lib/libreport.la \
+    libreport-problem-report.a
 
 reporter_upload_SOURCES = \
     reporter-upload.c
@@ -255,7 +269,9 @@ reporter_mailx_CPPFLAGS = \
     $(LIBREPORT_CFLAGS) \
     -D_GNU_SOURCE
 reporter_mailx_LDADD = \
-    ../lib/libreport.la
+    ../lib/libreport.la \
+    $(SATYR_LIBS) \
+    libreport-problem-report.a
 
 reporter_print_SOURCES = \
     reporter-print.c
